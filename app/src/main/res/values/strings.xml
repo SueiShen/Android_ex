@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android_ex</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="DefaultFragmentMsg">Nothing Shows here</string>
+    <string name="Weather">天氣資訊</string>
+    <string name="Traffic">交通資訊</string>
 </resources>

@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.android_ex"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures{viewBinding=true}
 
@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
