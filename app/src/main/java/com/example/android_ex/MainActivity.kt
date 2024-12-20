@@ -17,9 +17,12 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        supportFragmentManager.commit {
+        /*supportFragmentManager.commit {
             replace(R.id.fragmentContainerView,DefaultFragment())
-        }
+        }*/
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, DefaultFragment())
+            .commit()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -27,7 +30,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
-
+        binding.btWeather.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragmentContainerView, WeatherFragment())
+            }
+        }
+        binding.btTraffic.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragmentContainerView, TrafficFragment())
+            }
+        }
     }
 }
