@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.ArrayAdapter
+import android.widget.ListAdapter
+import android.widget.ListView
+import androidx.fragment.app.activityViewModels
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -19,6 +25,8 @@ class TrafficFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    //連接View和ViewModel
+    private val TrafficViewModel:DataViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +42,25 @@ class TrafficFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_traffic, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val resultListView:ListView = view.findViewById<ListView>(R.id.TrafficListView)
+        var ListAlldata = mutableListOf<String>()
 
+        TrafficViewModel.trafficData.observe(viewLifecycleOwner){mytrafficdata->
+            var message:String = ""
+            for (i in 0..<mytrafficdata.size){
+                message = "標題：${mytrafficdata[i].chtmessage}\n" +
+                        "上傳時間：${mytrafficdata[i].updatetime}\n" +
+                        "內容：\n${mytrafficdata[i].content}"
+                ListAlldata.add(message)
+            }
+            //adapter設定
+            val TrafficAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,ListAlldata)
+            resultListView.adapter = TrafficAdapter
+        }
+        TrafficViewModel.TrafficPost()
+    }
 
     companion object {
         /**

@@ -37,7 +37,7 @@ class DataViewModel:ViewModel() {
                         val trafficAllData = TrafficAllData(pp=getTrafficString)
                         //處理JSON
                         val JSONAll = JSONObject(trafficAllData.pp)
-                        val JSONRecord = JSONAll.getJSONArray("news")
+                        val JSONRecord = JSONAll.getJSONArray("News")
 
                         for (i in 0..<JSONRecord.length()){
                             var s:TrafficData = TrafficData()
@@ -53,7 +53,7 @@ class DataViewModel:ViewModel() {
                         _trafficData.postValue(mData)
                     }
                 }else{
-                    Log.d("Traffictag","下載失敗")
+                    Log.d("TrafficTag","下載失敗")
                 }
             }
         })
