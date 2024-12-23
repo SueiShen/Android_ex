@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
+import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +21,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class WeatherFragment : Fragment() {
+    private val viewModel:MyViewModel by activityViewModels()
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,6 +40,20 @@ class WeatherFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_weather, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val weatherTextView:TextView = view.findViewById<TextView>(R.id.showMessage)
+        var s=""
+        viewModel.weather.observe(viewLifecycleOwner){weather ->
+            for (i in 0..<weather.size){
+                s+="Time:${weather[i].issueTime} , item: ${weather.get(i).locationName}, value: ${weather.get(i).parameterValue}\n"
+            }
+            weatherTextView.text =s
+
+        }
+        viewModel.feachWeather()
     }
 
     companion object {

@@ -7,7 +7,9 @@ android {
     namespace = "com.example.android_ex"
     compileSdk = 35
 
-    buildFeatures{viewBinding=true}
+    buildFeatures{
+        viewBinding= true
+    }
 
     defaultConfig {
         applicationId = "com.example.android_ex"
@@ -44,11 +46,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.okhttp)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    implementation(libs.play.services.contextmanager)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.okhttp)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
