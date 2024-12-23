@@ -63,11 +63,11 @@ class MainActivity : AppCompatActivity(),SensorEventListener {
         when(event?.sensor?.type){
             Sensor.TYPE_ACCELEROMETER ->{
                 var x = event.values[0]
-                if (x>0){
+                if (x<0){
                     supportFragmentManager.commit {
                         replace(R.id.fragmentContainerView, TrafficFragment())
                     }
-                }else if (x<0) {
+                }else if (x>0) {
                     supportFragmentManager.commit {
                         replace(R.id.fragmentContainerView, WeatherFragment())
                     }
