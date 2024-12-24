@@ -13,13 +13,19 @@ import org.json.JSONObject
 import java.util.Objects
 
 class DataViewModel:ViewModel() {
-    //Model連接ViewModel
+    //trafficModel連接ViewModel
     private var _trafficData = MutableLiveData<MutableList<TrafficData>>()
     val trafficData:MutableLiveData<MutableList<TrafficData>> get() = _trafficData
+    //weatherModel連接ViewModel
+    private var _weatherData = MutableLiveData< MutableList<WeatherData>>()
+    val weather:MutableLiveData< MutableList<WeatherData>> get() = _weatherData
 
-    //連線okhttp
+    //連線okhttp_traffic
     private val TrafficClient = OkHttpClient()
-    //定義函數
+    //連線okhttp_weather
+    private val WeatherClient = OkHttpClient()
+
+    //定義函數_traffic
     fun TrafficPost(){
         val TrafficRequest = Request.Builder()
                 .url("https://tcgbusfs.blob.core.windows.net/dotapp/news.json")
@@ -59,5 +65,46 @@ class DataViewModel:ViewModel() {
         })
     }
 
+    //定義函數_weather
+    fun WeatherPost(){
+        var mData : MutableList<WeatherData> = ArrayList()
+        val request = Request.Builder()
+            .url("https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/F-C0032-009?Authorization=rdec-key-123-45678-011121314&format=JSON")
+            .build()
+        WeatherClient.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
 
+            override fun onResponse(call: Call, response: Response) {
+
+                if (response.isSuccessful) {
+                    response.body.string().let { getBackString ->
+                        val weather = WeatherAllData(p = getBackString)
+                        val mAll = JSONObject(weather.p)
+
+                        val Cwaopendata = mAll.getJSONObject("cwaopendata")
+                        val Dataset = Cwaopendata.getJSONObject("dataset")
+                        val ParameterSet = Dataset.getJSONObject("parameterSet")
+                        val Parameter = ParameterSet.getJSONArray("parameter")
+                        val Location = Dataset.getJSONObject("location")
+                        val DatasetInfo = Dataset.getJSONObject("datasetInfo")
+                        val ParameterValue = Parameter.getJSONObject(1)
+
+
+                        var s:WeatherData = WeatherData()
+                        s.apply {
+                            locationName =Location.getString("locationName")
+                            parameterValue = ParameterValue.getString("parameterValue")
+                            issueTime = DatasetInfo.getString("issueTime")
+                        }
+                        mData.add(s)
+                        _weatherData.postValue(mData)
+                    }
+                } else {
+                    Log.d("myTag","下載失敗")
+                }
+            }
+        })
+    }
 }
