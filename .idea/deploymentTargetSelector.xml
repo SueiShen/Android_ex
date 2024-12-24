@@ -2,12 +2,12 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="app">
+      <SelectionState runConfigName="Android_ex">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-23T17:42:46.217478100Z">
+        <DropdownSelection timestamp="2024-12-24T15:01:12.763966900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CT207ACNA" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\neil9\.android\avd\Pixel_3a_API_34_myphone.avd" />
             </handle>
           </Target>
         </DropdownSelection>
